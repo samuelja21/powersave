@@ -37,10 +37,10 @@ export function HowItWorksSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            ¿Cómo Funciona?
+            Como Funciona
           </span>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            De la instalacion al ahorro en 4 pasos
+            De la instalacion al ahorro en 5 pasos
           </h2>
           <p className="mt-4 text-lg text-muted-foreground text-pretty">
             Onboarding guiado con instalacion de sensores y configuracion de plataforma 
