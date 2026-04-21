@@ -40,7 +40,7 @@ export function HowItWorksSection() {
             Como Funciona
           </span>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            De la instalacion al ahorro en 5 pasos
+            De la instalacion al ahorro en 4 pasos
           </h2>
           <p className="mt-4 text-lg text-muted-foreground text-pretty">
             Onboarding guiado con instalacion de sensores y configuracion de plataforma 
