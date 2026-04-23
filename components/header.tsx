@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Zap } from "lucide-react"
+import { Menu, X } from "lucide-react"
+import { PowerSaveLogo } from "@/components/logo"
 
 const navigation = [
   { name: "Funcionalidades", href: "#caracteristicas" },
@@ -21,9 +22,7 @@ export function Header() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2 -m-1.5 p-1.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-6 w-6 text-primary-foreground" />
-            </div>
+            <PowerSaveLogo className="h-10 w-10" />
             <span className="text-xl font-bold text-foreground">PowerSave</span>
           </Link>
         </div>
@@ -61,7 +60,9 @@ export function Header() {
               Register
             </Link>
           </Button>
-          <Button>Log In</Button>
+          <Button asChild>
+            <Link href="/dashboard/consumo">Log In</Link>
+          </Button>
         </div>
       </nav>
 

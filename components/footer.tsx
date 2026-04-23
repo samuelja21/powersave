@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Zap, Linkedin, ExternalLink } from "lucide-react"
+import { Linkedin, ExternalLink } from "lucide-react"
+import { PowerSaveLogo } from "@/components/logo"
 
 const footerLinks = {
   producto: [
@@ -36,9 +37,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <Zap className="h-6 w-6 text-primary-foreground" />
-              </div>
+              <PowerSaveLogo className="h-10 w-10" />
               <span className="text-xl font-bold">PowerSave</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-background/70 leading-relaxed">
