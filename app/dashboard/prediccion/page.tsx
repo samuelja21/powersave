@@ -2,125 +2,81 @@
 
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { Card } from "@/components/ui/card"
+import { Zap, Euro, TrendingDown, Clock, Snowflake, Lightbulb, Cpu, Check, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { 
-  Zap, 
-  Euro, 
-  Leaf, 
-  TrendingDown, 
-  Clock, 
-  Snowflake, 
-  Lightbulb, 
-  Battery,
-  Check,
-  ArrowRight
-} from "lucide-react"
 
-const periods = ["7 dias", "Mensual", "Trimestral", "Anual"]
+const periods = ["7 días", "Mensual", "Trimestral", "Anual"]
 
 const mejoras = [
-  {
-    id: 1,
-    title: "Desplazamiento de horarios",
-    description: "Mover procesos pesados a periodo Valle (00h-08h)",
-    saving: 41,
-    icon: Clock,
-    iconBg: "bg-amber-50 text-amber-600",
-    selected: true,
-  },
-  {
-    id: 2,
-    title: "Optimizacion de climatizacion",
-    description: "Automatizar apagado en paradas y ajustar 2C en pico",
-    saving: 28,
-    icon: Snowflake,
-    iconBg: "bg-primary/10 text-primary",
-    selected: true,
-  },
-  {
-    id: 3,
-    title: "Iluminacion LED inteligente",
-    description: "Sensores de presencia + regulacion por luz natural",
-    saving: 18,
-    icon: Lightbulb,
-    iconBg: "bg-blue-50 text-blue-600",
-    selected: false,
-  },
-  {
-    id: 4,
-    title: "Cambio de tarifa contratada",
-    description: "Renegociar potencia contratada a tu perfil real",
-    saving: 10,
-    icon: Battery,
-    iconBg: "bg-amber-50 text-amber-600",
-    selected: false,
-  },
+  { id: 1, title: "Desplazamiento de horarios a Valle", description: "Mover procesos pesados al periodo Valle (00:00–08:00)", saving: 4_200, icon: Clock },
+  { id: 2, title: "Optimización climatización industrial", description: "Automatizar apagado en paradas y ajustar +2 °C en Punta", saving: 2_800, icon: Snowflake },
+  { id: 3, title: "Iluminación LED nave + exterior", description: "Sensores de presencia + regulación por luz natural", saving: 620, icon: Lightbulb },
+  { id: 4, title: "Variadores de frecuencia — Línea B", description: "Eliminar picos de arranque y reducir consumo en vacío", saving: 1_800, icon: Cpu },
 ]
 
+const COSTO_ACTUAL = 70_000
+
 export default function PrediccionPage() {
-  const [activePeriod, setActivePeriod] = useState("Mensual")
-  const [showActual, setShowActual] = useState(true)
-  const [showMejoras, setShowMejoras] = useState(true)
-  const [selectedMejoras, setSelectedMejoras] = useState<number[]>([1, 2])
+  const [activePeriod, setActivePeriod]     = useState("Mensual")
+  const [showActual, setShowActual]         = useState(true)
+  const [showMejoras, setShowMejoras]       = useState(true)
+  const [selected, setSelected]             = useState<number[]>([1, 2])
 
-  const toggleMejora = (id: number) => {
-    setSelectedMejoras((prev) =>
-      prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]
-    )
-  }
+  const toggle = (id: number) =>
+    setSelected((prev) => prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id])
 
-  const totalSaving = mejoras
-    .filter((m) => selectedMejoras.includes(m.id))
-    .reduce((acc, m) => acc + m.saving, 0)
-
-  const costoActual = 486
-  const costoConMejoras = costoActual - totalSaving
-  const porcentajeReduccion = Math.round((totalSaving / costoActual) * 100)
+  const totalSaving      = mejoras.filter((m) => selected.includes(m.id)).reduce((a, m) => a + m.saving, 0)
+  const costoConMejoras  = COSTO_ACTUAL - totalSaving
+  const pctReduccion     = Math.round((totalSaving / COSTO_ACTUAL) * 100)
 
   return (
-    <div className="animate-in fade-in duration-500">
-      {/* Header */}
-      <div className="mb-5">
-        <h1 className="text-2xl font-bold text-foreground tracking-tight">
-          Prediccion de Consumo
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Estimacion basada en tu historial + IA
-        </p>
+    <div className="space-y-4 animate-in fade-in duration-300">
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-900">Predicción de Consumo</h1>
+        <p className="text-sm text-gray-500 mt-0.5">Estimación basada en historial + IA · Planta Lleida</p>
       </div>
 
-      {/* Period Tabs */}
-      <div className="flex gap-1.5 bg-muted rounded-xl p-1 mb-5">
-        {periods.map((period) => (
+      {/* Period tabs */}
+      <div className="flex gap-1 bg-primary/10 rounded-full p-1">
+        {periods.map((p) => (
           <button
-            key={period}
-            onClick={() => setActivePeriod(period)}
+            key={p}
+            onClick={() => setActivePeriod(p)}
             className={cn(
-              "flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all",
-              activePeriod === period
-                ? "bg-card text-foreground shadow-sm font-semibold"
-                : "text-muted-foreground hover:text-foreground"
+              "flex-1 py-2 px-3 rounded-full text-xs font-semibold transition-all",
+              activePeriod === p
+                ? "bg-primary text-white shadow-sm"
+                : "text-primary/60 hover:text-primary"
             )}
           >
-            {period}
+            {p}
           </button>
         ))}
       </div>
 
-      {/* Scenario Header */}
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Escenario visible
-        </p>
-        <div className="flex gap-1.5">
+      {/* Chart card */}
+      <div className="rounded-2xl bg-[#f4fbf4] p-5">
+        <div className="flex items-start justify-between mb-2">
+          <div>
+            <p className="text-xs text-gray-400 mb-1">Consumo estimado — Abril 2025</p>
+            <p className="text-3xl font-semibold text-primary">
+              418.500 <span className="text-base font-normal text-primary/50">kWh</span>
+            </p>
+          </div>
+          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+            −6% vs Mar
+          </span>
+        </div>
+
+        {/* Scenario toggles */}
+        <div className="flex gap-2 mb-4">
           <button
             onClick={() => setShowActual(!showActual)}
             className={cn(
-              "px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all border",
+              "px-3 py-1 rounded-full text-[11px] font-semibold border transition-all",
               showActual
-                ? "bg-foreground text-background border-foreground"
-                : "bg-muted text-muted-foreground border-border"
+                ? "bg-[#248838] text-white border-[#248838]"
+                : "bg-gray-100 text-gray-400 border-transparent"
             )}
           >
             Actual
@@ -128,236 +84,179 @@ export default function PrediccionPage() {
           <button
             onClick={() => setShowMejoras(!showMejoras)}
             className={cn(
-              "px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all border",
+              "px-3 py-1 rounded-full text-[11px] font-semibold border transition-all",
               showMejoras
-                ? "bg-secondary text-secondary-foreground border-secondary"
-                : "bg-primary/10 text-primary border-primary/20"
+                ? "bg-[#77B732] text-white border-[#77B732]"
+                : "bg-gray-100 text-gray-400 border-transparent"
             )}
           >
             Con mejoras
           </button>
         </div>
-      </div>
 
-      {/* Chart Card */}
-      <Card className="p-5 mb-4 shadow-md border-border">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <p className="text-[11px] text-muted-foreground font-medium mb-1">
-              Consumo estimado - Noviembre
-            </p>
-            <p className="text-3xl font-bold text-foreground">
-              1.247 <span className="text-sm font-normal text-muted-foreground">kWh</span>
-            </p>
-          </div>
-          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary">
-            -12% vs Oct
-          </span>
-        </div>
-
-        {/* SVG Chart */}
-        <svg className="w-full h-[180px] overflow-visible" viewBox="0 0 360 160">
+        <svg className="w-full h-[160px] overflow-visible" viewBox="0 0 360 140">
           <defs>
-            <linearGradient id="aG1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+            <linearGradient id="gActual" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#248838" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#248838" stopOpacity="0" />
             </linearGradient>
-            <linearGradient id="aG2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--secondary))" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="hsl(var(--secondary))" stopOpacity="0" />
+            <linearGradient id="gMejoras" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#77B732" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#77B732" stopOpacity="0" />
             </linearGradient>
           </defs>
-          
-          {/* Grid lines */}
-          <line x1="0" y1="40" x2="360" y2="40" stroke="hsl(var(--border))" strokeWidth="1" />
-          <line x1="0" y1="80" x2="360" y2="80" stroke="hsl(var(--border))" strokeWidth="1" />
-          <line x1="0" y1="120" x2="360" y2="120" stroke="hsl(var(--border))" strokeWidth="1" />
-          
-          {/* Y-axis labels */}
-          <text x="2" y="38" fill="hsl(var(--muted-foreground))" fontSize="9">60kWh</text>
-          <text x="2" y="78" fill="hsl(var(--muted-foreground))" fontSize="9">40kWh</text>
-          <text x="2" y="118" fill="hsl(var(--muted-foreground))" fontSize="9">20kWh</text>
-          
-          {/* Today line */}
-          <line x1="228" y1="20" x2="228" y2="140" stroke="hsl(var(--border))" strokeWidth="1" strokeDasharray="3,3" />
-          <text x="232" y="30" fill="hsl(var(--muted-foreground))" fontSize="9">Hoy</text>
-          
-          {/* Actual line */}
+
+          {/* Grid */}
+          {[35, 70, 105].map((y) => (
+            <line key={y} x1="0" y1={y} x2="360" y2={y} stroke="#d4edda" strokeWidth="1" />
+          ))}
+
+          {/* Y labels */}
+          <text x="2" y="33"  fill="#c0c0c0" fontSize="8">18 MWh</text>
+          <text x="2" y="68"  fill="#c0c0c0" fontSize="8">12 MWh</text>
+          <text x="2" y="103" fill="#c0c0c0" fontSize="8">6 MWh</text>
+
+          {/* Hoy line */}
+          <line x1="228" y1="15" x2="228" y2="120" stroke="#e0e0e0" strokeWidth="1" strokeDasharray="3,3" />
+          <text x="232" y="25" fill="#c0c0c0" fontSize="8">Hoy</text>
+
+          {/* Línea actual */}
           {showActual && (
             <>
-              <path d="M28,115 C60,95 92,88 124,85 C156,78 172,58 204,55 C236,48 268,34 300,32 C332,28 344,30 352,28 L352,140 L28,140 Z" fill="url(#aG1)" />
-              <path d="M28,115 C60,95 92,88 124,85 C156,78 172,58 204,55 C236,48 268,34 300,32 C332,28 344,30 352,28" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M28,105 C60,88 92,80 124,76 C156,70 172,52 204,48 C236,42 268,30 300,28 C332,24 344,26 352,24 L352,120 L28,120 Z"
+                fill="url(#gActual)" />
+              <path d="M28,105 C60,88 92,80 124,76 C156,70 172,52 204,48 C236,42 268,30 300,28 C332,24 344,26 352,24"
+                fill="none" stroke="#248838" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="228" cy="48" r="8" fill="#248838" opacity="0.12" />
+              <circle cx="228" cy="48" r="4" fill="#248838" />
             </>
           )}
-          
-          {/* Mejoras line */}
+
+          {/* Línea con mejoras */}
           {showMejoras && (
             <>
-              <path d="M28,118 C60,100 92,95 124,93 C156,88 172,70 204,66 C236,59 268,42 300,40 C332,36 344,38 352,35 L352,140 L28,140 Z" fill="url(#aG2)" opacity="0.8" />
-              <path d="M28,118 C60,100 92,95 124,93 C156,88 172,70 204,66 C236,59 268,42 300,40 C332,36 344,38 352,35" fill="none" stroke="hsl(var(--secondary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="6,3" />
+              <path d="M28,108 C60,93 92,87 124,84 C156,79 172,63 204,59 C236,53 268,38 300,36 C332,32 344,34 352,31 L352,120 L28,120 Z"
+                fill="url(#gMejoras)" opacity="0.8" />
+              <path d="M28,108 C60,93 92,87 124,84 C156,79 172,63 204,59 C236,53 268,38 300,36 C332,32 344,34 352,31"
+                fill="none" stroke="#77B732" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="6,3" />
             </>
           )}
-          
-          {/* Current point */}
-          {showActual && (
-            <>
-              <circle cx="228" cy="55" r="9" fill="hsl(var(--primary))" opacity="0.12" />
-              <circle cx="228" cy="55" r="5" fill="hsl(var(--primary))" />
-            </>
-          )}
-          
-          {/* X-axis labels */}
-          <text x="28" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">1</text>
-          <text x="84" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">7</text>
-          <text x="140" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">13</text>
-          <text x="196" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">18</text>
-          <text x="252" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">23</text>
-          <text x="308" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">28</text>
-          <text x="352" y="155" fill="hsl(var(--muted-foreground))" fontSize="9" textAnchor="middle">30</text>
+
+          {/* X labels */}
+          {[["28", 28], ["7", 84], ["13", 140], ["18", 196], ["23", 252], ["28", 308], ["30", 352]].map(([label, x]) => (
+            <text key={x} x={Number(x)} y="133" fill="#c0c0c0" fontSize="8" textAnchor="middle">{label}</text>
+          ))}
         </svg>
 
-        {/* Legend */}
-        <div className="flex gap-4 mt-3.5 flex-wrap">
-          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground font-medium">
-            <div className="w-5 h-0.5 rounded bg-primary" />
-            Configuracion actual
+        {/* Leyenda */}
+        <div className="flex gap-5 mt-3">
+          <div className="flex items-center gap-1.5">
+            <div className="w-5 h-0.5 rounded" style={{ background: "#248838" }} />
+            <span className="text-[10px] text-gray-400">Sin optimizar</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground font-medium">
-            <div className="w-5 h-0.5 rounded bg-secondary" style={{ background: "repeating-linear-gradient(90deg, hsl(var(--secondary)) 0, hsl(var(--secondary)) 4px, transparent 4px, transparent 8px)" }} />
-            Con mejoras aplicadas
+          <div className="flex items-center gap-1.5">
+            <div className="w-5 h-0.5 rounded" style={{ background: "repeating-linear-gradient(90deg,#77B732 0,#77B732 4px,transparent 4px,transparent 8px)" }} />
+            <span className="text-[10px] text-gray-400">Con mejoras</span>
           </div>
         </div>
-      </Card>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-2.5 mb-4">
-        <Card className="p-4 shadow-sm border-border">
-          <Zap className="w-5 h-5 text-primary mb-2" />
-          <p className="text-xl font-bold text-foreground">1.247</p>
-          <p className="text-[11px] text-muted-foreground">kWh estimados</p>
-          <p className="text-[11px] font-semibold text-red-500 mt-1.5">+3% vs media</p>
-        </Card>
-        <Card className="p-4 shadow-sm border-border">
-          <Euro className="w-5 h-5 text-primary mb-2" />
-          <p className="text-xl font-bold text-foreground">{costoActual}</p>
-          <p className="text-[11px] text-muted-foreground">Coste estimado</p>
-          <p className="text-[11px] font-semibold text-red-500 mt-1.5">+18 vs oct</p>
-        </Card>
-        <Card className="p-4 shadow-sm border-border">
-          <Leaf className="w-5 h-5 text-secondary mb-2" />
-          <p className="text-xl font-bold text-foreground">{costoConMejoras}</p>
-          <p className="text-[11px] text-muted-foreground">Con mejoras</p>
-          <p className="text-[11px] font-semibold text-primary mt-1.5">-{totalSaving} ahorro</p>
-        </Card>
-        <Card className="p-4 shadow-sm border-border">
-          <TrendingDown className="w-5 h-5 text-secondary mb-2" />
-          <p className="text-xl font-bold text-foreground">-{porcentajeReduccion}%</p>
-          <p className="text-[11px] text-muted-foreground">Reduccion posible</p>
-          <p className="text-[11px] font-semibold text-primary mt-1.5">Potencial maximo</p>
-        </Card>
       </div>
 
-      {/* Projection Box */}
-      <div className="bg-gradient-to-br from-foreground to-foreground/90 rounded-2xl p-5 mb-4 text-background relative overflow-hidden">
-        <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-background/5" />
-        
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-background/70 mb-2.5">
-          Resumen del mes - Noviembre 2024
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-3">
+        {[
+          { icon: Zap,          value: "418.500",                              sub: "kWh estimados",    note: "−6% vs Mar",                            noteColor: "text-primary", green: true  },
+          { icon: Euro,         value: `${COSTO_ACTUAL.toLocaleString()} €`,   sub: "Coste estimado",   note: "+2.1% vs Mar",                           noteColor: "text-red-500", green: false },
+          { icon: TrendingDown, value: `${costoConMejoras.toLocaleString()} €`, sub: "Con mejoras",     note: `−${totalSaving.toLocaleString()} € ahorro`, noteColor: "text-primary", green: true  },
+          { icon: TrendingDown, value: `−${pctReduccion}%`,                    sub: "Reducción posible", note: "Potencial máximo",                       noteColor: "text-primary", green: true  },
+        ].map((s, i) => (
+          <div key={i} className={cn("rounded-2xl p-4", s.green ? "bg-primary/10" : "bg-white")}>
+            <s.icon className="w-5 h-5 text-primary mb-2" />
+            <p className={cn("text-xl font-semibold", s.green ? "text-primary" : "text-gray-900")}>{s.value}</p>
+            <p className="text-xs text-gray-400">{s.sub}</p>
+            <p className={cn("text-xs font-semibold mt-1.5", s.noteColor)}>{s.note}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Resumen */}
+      <div className="rounded-3xl bg-primary/10 p-5 relative overflow-hidden">
+        <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-4">
+          Resumen — Abril 2025
         </p>
-        
-        <div className="flex items-center justify-between mb-3.5">
-          <div className="flex-1">
-            <p className="text-xs text-background/70 mb-1">Sin optimizar</p>
-            <p className="text-2xl font-bold">{costoActual}</p>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-[10px] text-gray-400 mb-0.5">Sin optimizar</p>
+            <p className="text-2xl font-semibold text-gray-900">{COSTO_ACTUAL.toLocaleString()} €</p>
           </div>
-          <span className="text-xs text-background/70 px-2.5">→</span>
-          <div className="flex-1">
-            <p className="text-xs text-background/70 mb-1">Con mejoras</p>
-            <p className="text-2xl font-bold">{costoConMejoras}</p>
+          <ArrowRight className="w-4 h-4 text-gray-300" />
+          <div>
+            <p className="text-[10px] text-gray-400 mb-0.5">Con mejoras</p>
+            <p className="text-2xl font-semibold text-gray-900">{costoConMejoras.toLocaleString()} €</p>
           </div>
-          <div className="bg-secondary rounded-xl px-3.5 py-2.5 text-center min-w-[90px]">
-            <p className="text-lg font-extrabold text-secondary-foreground">{totalSaving}</p>
-            <p className="text-[10px] text-secondary-foreground/80">ahorro est.</p>
+          <div className="rounded-2xl bg-primary px-4 py-3 text-center">
+            <p className="text-lg font-bold text-white">{totalSaving.toLocaleString()} €</p>
+            <p className="text-[9px] text-white/80">ahorro est.</p>
           </div>
         </div>
-        
-        <div className="flex justify-between text-[10px] text-background/70 mb-1.5">
+        <div className="flex justify-between text-[10px] text-gray-400 mb-1.5">
           <span>0%</span>
-          <span>Reduccion posible: {porcentajeReduccion}%</span>
+          <span>Reducción posible: {pctReduccion}%</span>
           <span>100%</span>
         </div>
-        <div className="h-1.5 bg-background/10 rounded-full">
-          <div 
-            className="h-full bg-secondary rounded-full transition-all duration-500"
-            style={{ width: `${porcentajeReduccion}%` }}
+        <div className="h-2 bg-white/60 rounded-full overflow-hidden">
+          <div
+            className="h-full rounded-full transition-all duration-500"
+            style={{ width: `${pctReduccion}%`, background: "#248838" }}
           />
         </div>
       </div>
 
-      {/* Mejoras Header */}
-      <div className="flex items-center justify-between mb-3 mt-1">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Mejoras disponibles
-        </p>
-        <p className="text-[11px] text-muted-foreground">Selecciona para simular</p>
-      </div>
-
-      {/* Mejoras Cards */}
-      <div className="space-y-2.5 mb-4">
-        {mejoras.map((mejora) => {
-          const isSelected = selectedMejoras.includes(mejora.id)
-          return (
-            <Card
-              key={mejora.id}
-              onClick={() => toggleMejora(mejora.id)}
-              className={cn(
-                "p-4 cursor-pointer transition-all hover:shadow-md flex items-start gap-3.5 relative overflow-hidden border",
-                isSelected
-                  ? "border-secondary bg-primary/5"
-                  : "border-border hover:translate-y-[-1px]"
-              )}
-            >
-              {isSelected && (
-                <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-secondary rounded-r" />
-              )}
-              
-              <div className="flex flex-col items-center">
-                <div
-                  className={cn(
-                    "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all mb-1.5",
-                    isSelected
-                      ? "bg-secondary border-secondary text-secondary-foreground"
-                      : "border-border"
-                  )}
-                >
-                  {isSelected && <Check className="w-3 h-3" />}
+      {/* Mejoras seleccionables */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Mejoras disponibles</p>
+          <p className="text-xs font-medium text-primary">Selecciona para simular</p>
+        </div>
+        <div className="space-y-2">
+          {mejoras.map((m) => {
+            const isSelected = selected.includes(m.id)
+            return (
+              <button
+                key={m.id}
+                onClick={() => toggle(m.id)}
+                className={cn(
+                  "w-full rounded-2xl p-4 flex items-start gap-3.5 text-left transition-all relative overflow-hidden",
+                  isSelected ? "bg-primary/15 shadow-sm" : "bg-[#f4fbf4] hover:bg-primary/10"
+                )}
+              >
+                {isSelected && (
+                  <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r bg-primary" />
+                )}
+                <div className={cn(
+                  "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 mt-0.5",
+                  isSelected ? "bg-primary border-primary" : "border-gray-200"
+                )}>
+                  {isSelected && <Check className="w-3 h-3 text-white" />}
                 </div>
-              </div>
-              
-              <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", mejora.iconBg)}>
-                <mejora.icon className="w-[18px] h-[18px]" />
-              </div>
-              
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-foreground">{mejora.title}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{mejora.description}</p>
-              </div>
-              
-              <div className="text-right flex-shrink-0">
-                <p className="text-[15px] font-bold text-primary">-{mejora.saving}</p>
-                <p className="text-[10px] text-muted-foreground">/mes est.</p>
-              </div>
-            </Card>
-          )
-        })}
+                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <m.icon className="w-4 h-4 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-900">{m.title}</p>
+                  <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{m.description}</p>
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <p className="text-sm font-bold text-primary">−{m.saving.toLocaleString()} €</p>
+                  <p className="text-[10px] text-gray-400">/mes</p>
+                </div>
+              </button>
+            )
+          })}
+        </div>
       </div>
 
-      {/* Divider & CTA */}
-      <div className="h-px bg-border mb-4" />
-      <Button className="w-full py-6 text-[15px] font-semibold shadow-lg">
-        <Zap className="w-4 h-4 mr-2" />
-        Ver plan de accion completo
-        <ArrowRight className="w-4 h-4 ml-2" />
+      <Button className="w-full rounded-full py-6 text-sm font-semibold">
+        Ver plan de acción completo <ArrowRight className="w-4 h-4 ml-2" />
       </Button>
     </div>
   )
