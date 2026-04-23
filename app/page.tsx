@@ -13,9 +13,8 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
-        <FeaturesSection />
-        <HowItWorksSection />
         <PricingSection />
+        <HowItWorksSection />
         <TestimonialsSection />
         <CTASection />
       </main>

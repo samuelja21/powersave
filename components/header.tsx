@@ -58,10 +58,10 @@ export function Header() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
           <Button variant="ghost" asChild>
             <Link href="https://www.figma.com/proto/aUYGYZlCHaPTinb8pNRF38/PowerSave?node-id=193-2" target="_blank">
-              Ver Demo
+              Register
             </Link>
           </Button>
-          <Button>Solicitar Piloto</Button>
+          <Button>Log In</Button>
         </div>
       </nav>
 
