@@ -12,7 +12,7 @@ const carouselSlides = [
     title: (
       <>
         Reduce tu factura eléctrica entre un{" "}
-        <span className="text-primary-foreground underline decoration-primary">20% y 35%</span>
+        <span className="text-primary-foreground underline decoration-primary">20% y 30%</span>
       </>
     ),
     description:
@@ -151,7 +151,7 @@ export function HeroSection() {
           {/* Static buttons — siempre visibles */}
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="w-full sm:w-auto gap-2 bg-primary hover:bg-primary/90" asChild>
-              <Link href="#" target="_blank">
+              <Link href="/dashboard/consumo" target="_blank">
                 Probar Demo Interactiva
                 <ArrowRight className="h-4 w-4" />
               </Link>
@@ -185,7 +185,7 @@ export function HeroSection() {
         {/* Stats con Glassmorphism */}
         <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:mt-20">
           {[
-            { value: "20-35%", label: "Ahorro en factura" },
+            { value: "20-30%", label: "Ahorro en factura" },
             { value: "73K", label: "Ahorro potencial/año" },
             { value: "<2", label: "Semanas instalación" },
             { value: "24/7", label: "Monitoreo IoT" },
