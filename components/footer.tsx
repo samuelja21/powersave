@@ -45,7 +45,7 @@ export function Footer() {
               Sensores IoT + IA para reducir entre 20-35% tu factura electrica.
             </p>
             <p className="mt-4 text-xs text-background/50">
-              Proyecto Master en Ingenieria Informatica 2025
+              Proyecto Master en Ingenieria Informatica 2026
             </p>
             <div className="mt-6 flex gap-4">
               <Link
