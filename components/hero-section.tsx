@@ -160,9 +160,12 @@ export function HeroSection() {
               size="lg"
               variant="outline"
               className="w-full sm:w-auto gap-2 bg-white/10 text-white border-white/20 backdrop-blur-sm hover:bg-white/20"
+              asChild
             >
-              <Play className="h-4 w-4" />
-              Ver cómo funciona
+              <Link href="#video">
+                <Play className="h-4 w-4" />
+                Ver cómo funciona
+              </Link>
             </Button>
           </div>
 
