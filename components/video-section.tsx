@@ -2,9 +2,24 @@
 
 import { useState } from "react"
 import { Play } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+const tabs = [
+  { id: 1, label: "Video 1", src: "/videos/video-1.mp4" },
+  { id: 2, label: "Video 2", src: "/videos/video-2.mp4" },
+  { id: 3, label: "Video 3", src: "/videos/video-3.mp4" },
+  { id: 4, label: "Video 4", src: "/videos/video-4.mp4" },
+]
 
 export function VideoSection() {
-  const [playing, setPlaying] = useState(false)
+  const [activeTab, setActiveTab] = useState(0)
+  const [playing, setPlaying]     = useState(false)
+
+  const handleTabChange = (index: number) => {
+    if (index === activeTab) return
+    setActiveTab(index)
+    setPlaying(false)
+  }
 
   return (
     <section
@@ -21,9 +36,27 @@ export function VideoSection() {
           Descubre{" "}
           <span className="text-primary">PowerSave</span>
         </h2>
-        <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto text-pretty">
+        <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto text-pretty">
           En menos de 1 minuto conocerás la solución a tus problemas energéticos.
         </p>
+
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-6">
+          {tabs.map((tab, i) => (
+            <button
+              key={tab.id}
+              onClick={() => handleTabChange(i)}
+              className={cn(
+                "px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200",
+                activeTab === i
+                  ? "bg-primary text-white shadow-md shadow-primary/30"
+                  : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
         {/* Player */}
         <div
@@ -32,13 +65,13 @@ export function VideoSection() {
         >
           {playing ? (
             <video
+              key={tabs[activeTab].src}
               className="absolute inset-0 w-full h-full object-cover"
-              src="/videos/video-1.mp4"
+              src={tabs[activeTab].src}
               autoPlay
               controls
             />
           ) : (
-            /* Thumbnail + play overlay */
             <div
               className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1a3a24] to-[#0d1f12] cursor-pointer group"
               onClick={() => setPlaying(true)}
@@ -62,7 +95,9 @@ export function VideoSection() {
                 <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 group-hover:scale-110 transition-transform duration-200">
                   <Play className="w-8 h-8 text-white fill-white ml-1" />
                 </div>
-                <span className="text-white/60 text-sm font-medium">Reproducir vídeo</span>
+                <span className="text-white/60 text-sm font-medium">
+                  {tabs[activeTab].label}
+                </span>
               </div>
             </div>
           )}
