@@ -17,14 +17,14 @@ export default function SolarPage() {
   const co2          = (annualGen * 0.000233 / 1000).toFixed(0)
 
   return (
-    <div className="space-y-4 animate-in fade-in duration-300">
+    <div className="space-y-3 animate-in fade-in duration-300">
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Simulador Solar</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Calcula si la fotovoltaica es rentable para tu planta</p>
+        <h1 className="text-xl font-semibold text-gray-900">Simulador Solar</h1>
+        <p className="text-xs text-gray-400">Calcula si la fotovoltaica es rentable para tu planta</p>
       </div>
 
       {/* Input */}
-      <div className="rounded-2xl bg-white p-5">
+      <div className="rounded-2xl bg-white p-4">
         <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Parámetros</p>
         <div className="space-y-4">
           {[
@@ -55,7 +55,7 @@ export default function SolarPage() {
       </div>
 
       {/* Resultado principal */}
-      <div className="rounded-3xl p-5 bg-primary/10">
+      <div className="rounded-2xl p-4 bg-primary/10">
         <div className="flex items-center gap-2 mb-4">
           <Sun className="w-5 h-5 text-primary" />
           <p className="text-sm font-semibold text-primary">Resultados estimados</p>
@@ -76,8 +76,8 @@ export default function SolarPage() {
       </div>
 
       {/* Inversión */}
-      <div className="rounded-2xl bg-white p-5">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Inversión</p>
+      <div className="rounded-2xl bg-white p-4">
+        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-3">Inversión</p>
         <div className="space-y-2.5">
           {[
             { label: "Instalación bruta",      value: `${installCost.toLocaleString()} €` },

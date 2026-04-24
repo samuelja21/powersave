@@ -107,10 +107,10 @@ export default function IrregularidadesPage() {
   }
 
   return (
-    <div className="space-y-4 animate-in fade-in duration-300">
+    <div className="space-y-3 animate-in fade-in duration-300">
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Irregularidades</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Periodos de 15 min — Abril 2025</p>
+        <h1 className="text-xl font-semibold text-gray-900">Irregularidades</h1>
+        <p className="text-xs text-gray-400">Periodos de 15 min · Abril 2025</p>
       </div>
 
       {/* KPIs */}
@@ -120,9 +120,9 @@ export default function IrregularidadesPage() {
           <p className="text-2xl font-semibold text-gray-900">{excesos.length}</p>
           <p className="text-xs text-gray-500">Excesos detectados</p>
         </div>
-        <div className="rounded-2xl bg-white p-4">
-          <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-2">Penalización est.</p>
-          <p className="text-2xl font-semibold text-red-600">{totalPenalty.toLocaleString()} €</p>
+        <div className="rounded-2xl bg-red-50 p-4">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wide mb-2">Penalización est.</p>
+          <p className="text-2xl font-semibold text-red-700">{totalPenalty.toLocaleString()} €</p>
           <p className="text-xs text-gray-400">este mes</p>
         </div>
         <div className="rounded-2xl bg-primary/10 p-4">
@@ -133,7 +133,7 @@ export default function IrregularidadesPage() {
       </div>
 
       {/* Gráfico interactivo */}
-      <div className="rounded-2xl bg-white p-5">
+      <div className="rounded-2xl bg-white p-4">
         <p className="text-sm font-semibold text-gray-900 mb-0.5">Potencia por intervalo de 30 min</p>
         <p className="text-xs text-gray-400 mb-4">Pulsa una barra roja para ver la causa y recomendación</p>
         <svg viewBox="0 0 480 120" className="w-full h-[130px]">
