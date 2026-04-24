@@ -52,7 +52,7 @@ export function CTASection() {
           </div>
 
           <p className="mt-10 text-sm text-primary-foreground/60">
-            Proyecto del Master en Ingenieria Informatica 2025
+            Proyecto del Master en Ingenieria Informatica 2026
           </p>
         </div>
       </div>
