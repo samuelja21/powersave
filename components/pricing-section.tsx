@@ -51,7 +51,7 @@ const plans = [
     ],
     popular: false,
     cta: "Contactar Ventas",
-    highlight: "Planta con 50.000 EUR/mes puede ahorrar 10.200-35.000 EUR/ano",
+    highlight: "Planta con 50.000 EUR/mes puede ahorrar 60.000-180.000 EUR/ano",
   },
 ]
 
