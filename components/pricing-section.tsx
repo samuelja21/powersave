@@ -36,7 +36,7 @@ const plans = [
     ],
     popular: true,
     cta: "Solicitar Demo",
-    highlight: "Una PYME con 40.000 EUR/ano en energia recupera el ahorro desde el primer mes",
+    highlight: "Una PYME con 40.000 EUR/mes en energia recupera el ahorro desde el primer mes",
   },
   {
     name: "Pro",
@@ -51,7 +51,7 @@ const plans = [
     ],
     popular: false,
     cta: "Contactar Ventas",
-    highlight: "Planta con 8.000 EUR/mes puede ahorrar 15.000-35.000 EUR/ano",
+    highlight: "Planta con 50.000 EUR/mes puede ahorrar 10.200-35.000 EUR/ano",
   },
 ]
 
