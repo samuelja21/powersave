@@ -18,7 +18,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-foreground tracking-tight">
-          Buenos dias, Jorge
+          Buenos dias, Bob
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
           Resumen de tu consumo energetico - Noviembre 2024

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -39,12 +40,12 @@ export function DashboardSidebar() {
       {/* User */}
       <div className="px-4 mb-4">
         <div className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-[#f4f6f3]">
-          <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
-            JG
+          <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0">
+            <Image src="/empresa-bob.jpg" alt="Bob Smith" width={36} height={36} className="object-cover w-full h-full" />
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-gray-900 truncate">Jorge Garcia</p>
-            <p className="text-xs text-gray-500 truncate">ArcelorMittal Lleida</p>
+            <p className="text-sm font-semibold text-gray-900 truncate">Bob Smith</p>
+            <p className="text-xs text-gray-500 truncate">Freedom Frozen Foods</p>
           </div>
         </div>
       </div>
