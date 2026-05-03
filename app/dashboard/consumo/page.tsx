@@ -17,7 +17,7 @@ const period = {
   punta: { label: "Punta", color: "#bf360c", fill: "#fbe9e7", text: "#bf360c", price: 0.20, hours: "10:00–14:00 · 18:00–22:00" },
 }
 
-const hourlyData = [220, 200, 195, 188, 192, 215, 285, 420, 590, 650, 830, 880, 865, 845, 630]
+const hourlyData = [285, 268, 262, 255, 260, 278, 320, 445, 510, 548, 590, 608, 615, 605, 572]
 const CURRENT_HOUR = 14
 
 export default function ConsumoPage() {
@@ -47,7 +47,7 @@ export default function ConsumoPage() {
     <div className="space-y-3 animate-in fade-in duration-300">
       <div>
         <h1 className="text-xl font-semibold text-gray-900">Consumo Actual</h1>
-        <p className="text-xs text-gray-400">Miércoles, 23 de Abril · Planta Lleida</p>
+        <p className="text-xs text-gray-400">Miércoles, 23 de Abril · Freedom Frozen Foods</p>
       </div>
 
       {/* Periodo activo */}
