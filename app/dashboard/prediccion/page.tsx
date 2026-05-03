@@ -33,7 +33,7 @@ export default function PrediccionPage() {
     <div className="space-y-4 animate-in fade-in duration-300">
       <div>
         <h1 className="text-2xl font-semibold text-gray-900">Predicción de Consumo</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Estimación basada en historial + IA · Planta Lleida</p>
+        <p className="text-sm text-gray-500 mt-0.5">Estimación basada en historial + IA · Freedom Frozen Foods</p>
       </div>
 
       {/* Period tabs */}
@@ -60,11 +60,11 @@ export default function PrediccionPage() {
           <div>
             <p className="text-xs text-gray-400 mb-1">Consumo estimado — Abril 2025</p>
             <p className="text-3xl font-semibold text-primary">
-              418.500 <span className="text-base font-normal text-primary/50">kWh</span>
+              420.000 <span className="text-base font-normal text-primary/50">kWh</span>
             </p>
           </div>
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary">
-            −6% vs Mar
+          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-500">
+            +3% vs Mar
           </span>
         </div>
 
@@ -164,10 +164,10 @@ export default function PrediccionPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3">
         {[
-          { icon: Zap,          value: "418.500",                              sub: "kWh estimados",    note: "−6% vs Mar",                            noteColor: "text-primary", green: true  },
-          { icon: Euro,         value: `${COSTO_ACTUAL.toLocaleString()} €`,   sub: "Coste estimado",   note: "+2.1% vs Mar",                           noteColor: "text-red-500", green: false },
-          { icon: TrendingDown, value: `${costoConMejoras.toLocaleString()} €`, sub: "Con mejoras",     note: `−${totalSaving.toLocaleString()} € ahorro`, noteColor: "text-primary", green: true  },
-          { icon: TrendingDown, value: `−${pctReduccion}%`,                    sub: "Reducción posible", note: "Potencial máximo",                       noteColor: "text-primary", green: true  },
+          { icon: Zap,          value: "420.000",                                           sub: "kWh estimados",     note: "+3% vs Mar",                                noteColor: "text-red-500", green: false },
+          { icon: Euro,         value: `${COSTO_ACTUAL.toLocaleString()} €`,              sub: "Coste estimado",    note: "+4% vs Mar",                                noteColor: "text-red-500", green: false },
+          { icon: TrendingDown, value: `${costoConMejoras.toLocaleString()} €`,           sub: "Con mejoras",       note: `−${totalSaving.toLocaleString()} €/mes`,    noteColor: "text-primary", green: true  },
+          { icon: TrendingDown, value: `${(totalSaving * 12).toLocaleString()} €`,        sub: "Ahorro anual est.", note: "Si aplicas las mejoras",                    noteColor: "text-primary", green: true  },
         ].map((s, i) => (
           <div key={i} className={cn("rounded-2xl p-4", s.green ? "bg-primary/10" : "bg-white")}>
             <s.icon className="w-5 h-5 text-primary mb-2" />
@@ -195,7 +195,8 @@ export default function PrediccionPage() {
           </div>
           <div className="rounded-2xl bg-primary px-4 py-3 text-center">
             <p className="text-lg font-bold text-white">{totalSaving.toLocaleString()} €</p>
-            <p className="text-[9px] text-white/80">ahorro est.</p>
+            <p className="text-[9px] text-white/80">ahorro/mes</p>
+            <p className="text-xs font-semibold text-white/90 mt-0.5">{(totalSaving * 12).toLocaleString()} €/año</p>
           </div>
         </div>
         <div className="flex justify-between text-[10px] text-gray-400 mb-1.5">
