@@ -42,16 +42,25 @@ const sistemas = [
   },
 ]
 
-const estadoColor: Record<string, { bg: string; text: string; bar: string }> = {
-  "Óptimo":    { bg: "bg-[#e8f5e9]", text: "text-[#1b5e20]", bar: "bg-primary"   },
-  "Mejorable": { bg: "bg-[#f1f8e9]", text: "text-[#558b2f]", bar: "bg-[#77B732]" },
-  "Crítico":   { bg: "bg-red-50",    text: "text-red-800",    bar: "bg-red-500"   },
+const estadoColor: Record<string, { bg: string; text: string; bar: string; line: string }> = {
+  "Óptimo":    { bg: "bg-[#e8f5e9]", text: "text-[#1b5e20]", bar: "bg-primary",   line: "#248838" },
+  "Mejorable": { bg: "bg-[#f1f8e9]", text: "text-[#558b2f]", bar: "bg-[#77B732]", line: "#77B732" },
+  "Crítico":   { bg: "bg-red-50",    text: "text-red-800",    bar: "bg-red-500",   line: "#ef4444" },
 }
 
 const DAYS = ["L", "M", "X", "J", "V", "S", "D"]
 
+const sparkPath = (pts: [number, number][]): string =>
+  pts.map(([x, y], i) => {
+    if (i === 0) return `M ${x},${y}`
+    const [px, py] = pts[i - 1]
+    const mx = (px + x) / 2
+    return `C ${mx},${py} ${mx},${y} ${x},${y}`
+  }).join(" ")
+
 export default function SistemasPage() {
-  const [expanded, setExpanded] = useState<string | null>(null)
+  const [expanded,    setExpanded]    = useState<string | null>(null)
+  const [activePoint, setActivePoint] = useState<{ name: string; idx: number } | null>(null)
   const total = sistemas.reduce((a, s) => a + s.kw, 0)
 
   return (
@@ -84,6 +93,14 @@ export default function SistemasPage() {
           const sMax   = Math.max(...s.sparkline)
           const sMin   = Math.min(...s.sparkline)
           const range  = sMax - sMin || 1
+          const W = 120, H = 26, PT = 28
+          const pts: [number, number][] = s.sparkline.map((v, i) => [
+            Math.round((i / 6) * W),
+            Math.round(PT + H - ((v - sMin) / range) * H),
+          ])
+          const lineD  = sparkPath(pts)
+          const areaD  = `${lineD} L ${pts[6][0]},${PT + H + 4} L 0,${PT + H + 4} Z`
+          const gradId = `g-${s.nombre.replace(/\s/g, "-")}`
 
           return (
             <div key={s.nombre} className={cn("rounded-2xl overflow-hidden transition-shadow", isOpen ? "shadow-sm" : "")}>
@@ -116,28 +133,69 @@ export default function SistemasPage() {
                       <Activity className="w-3.5 h-3.5 text-primary" />
                       <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Últimos 7 días (kW)</p>
                     </div>
-                    <svg viewBox="0 0 120 32" className="w-full h-10">
-                      <polyline
-                        points={s.sparkline.map((v, i) => {
-                          const x = i * 20
-                          const y = 28 - ((v - sMin) / range) * 22
-                          return `${x},${y}`
-                        }).join(" ")}
-                        fill="none"
-                        stroke="#248838"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      {s.sparkline.map((v, i) => {
-                        const x = i * 20
-                        const y = 28 - ((v - sMin) / range) * 22
-                        return <circle key={i} cx={x} cy={y} r="2.5" fill="#248838" />
+                    <svg viewBox="0 0 152 74" className="w-full h-[92px]"
+                      onClick={() => setActivePoint(null)}>
+                      <defs>
+                        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={c.line} stopOpacity="0.22" />
+                          <stop offset="100%" stopColor={c.line} stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      {/* Grid */}
+                      {[PT + H * 0.33, PT + H * 0.67].map((y, k) => (
+                        <line key={k} x1="0" y1={y} x2={W} y2={y} stroke="#f0f0f0" strokeWidth="0.8" />
+                      ))}
+                      {/* Relleno degradado */}
+                      <path d={areaD} fill={`url(#${gradId})`} />
+                      {/* Línea suave */}
+                      <path d={lineD} fill="none" stroke={c.line} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                      {/* Tooltip del punto activo */}
+                      {activePoint?.name === s.nombre && (() => {
+                        const ai = activePoint.idx
+                        const [ax, ay] = pts[ai]
+                        const tipX = Math.max(14, Math.min(ax, W - 14))
+                        return (
+                          <g>
+                            <line x1={ax} y1={PT} x2={ax} y2={PT + H}
+                              stroke={c.line} strokeWidth="1" strokeDasharray="3,2" opacity="0.35" />
+                            <rect x={tipX - 14} y={ay - 22} width={28} height={14} rx={3} fill={c.line} />
+                            <text x={tipX} y={ay - 12} textAnchor="middle" fontSize="8" fill="white" fontWeight="700">
+                              {s.sparkline[ai]} kW
+                            </text>
+                            <polygon points={`${tipX - 4},${ay - 8} ${tipX + 4},${ay - 8} ${tipX},${ay - 4}`} fill={c.line} />
+                          </g>
+                        )
+                      })()}
+                      {/* Puntos con área táctil */}
+                      {pts.map(([x, y], i) => {
+                        const isActive = activePoint?.name === s.nombre && activePoint.idx === i
+                        return (
+                          <g key={i} style={{ cursor: "pointer" }}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setActivePoint(isActive ? null : { name: s.nombre, idx: i })
+                            }}>
+                            <circle cx={x} cy={y} r={8} fill="transparent" />
+                            <circle cx={x} cy={y}
+                              r={isActive ? 4 : i === 6 ? 3.5 : 2.2}
+                              fill={isActive ? c.line : "white"}
+                              stroke={c.line}
+                              strokeWidth={isActive || i === 6 ? 2.2 : 1.5}
+                            />
+                          </g>
+                        )
                       })}
+                      {/* Valor último punto (oculto si hay selección activa) */}
+                      {activePoint?.name !== s.nombre && (
+                        <text x={pts[6][0] + 7} y={pts[6][1] + 4} fontSize="8.5" fill={c.line} fontWeight="700">
+                          {s.sparkline[6]} kW
+                        </text>
+                      )}
+                      {/* Labels días */}
+                      {DAYS.map((d, i) => (
+                        <text key={d} x={Math.round((i / 6) * W)} y="70" fontSize="8" fill="#d1d5db" textAnchor="middle">{d}</text>
+                      ))}
                     </svg>
-                    <div className="flex justify-between text-[10px] text-gray-400 -mt-1">
-                      {DAYS.map((d) => <span key={d}>{d}</span>)}
-                    </div>
                   </div>
 
                   <div className="rounded-xl bg-[#f4f6f3] p-3">
