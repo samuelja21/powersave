@@ -9,10 +9,8 @@ const tipos    = ["Energético", "ESG / CSRD", "ISO 50001", "Directiva 2023/1791
 const periodos = ["Mensual", "Trimestral", "Anual"]
 
 const recientes = [
-  { nombre: "Informe Energético — Marzo 2025",  tipo: "Energético", fecha: "01 Abr 2025", size: "2.1 MB" },
-  { nombre: "Reporte ESG / CSRD — Q1 2025",     tipo: "ESG",        fecha: "03 Abr 2025", size: "4.8 MB" },
-  { nombre: "Informe Energético — Feb 2025",    tipo: "Energético", fecha: "01 Mar 2025", size: "2.0 MB" },
-  { nombre: "Auditoría ISO 50001 — 2024",       tipo: "ISO 50001",  fecha: "15 Ene 2025", size: "6.3 MB" },
+  { nombre: "Informe Energético — Abril 2025",            tipo: "Energético",        fecha: "23 Abr 2025", size: "1.8 MB" },
+  { nombre: "Cumplimiento Directiva 2023/1791 — Abr 2025", tipo: "Directiva 2023/1791", fecha: "23 Abr 2025", size: "2.4 MB" },
 ]
 
 export default function InformesPage() {
@@ -34,7 +32,7 @@ export default function InformesPage() {
     <div className="space-y-3 animate-in fade-in duration-300">
       <div>
         <h1 className="text-xl font-semibold text-gray-900">Generador de Informes</h1>
-        <p className="text-xs text-gray-400">Reportes energéticos, ESG y de cumplimiento normativo</p>
+        <p className="text-xs text-gray-400">Cumplimiento normativo automatizado · Freedom Frozen Foods</p>
       </div>
 
       {/* Configurador */}

@@ -5,14 +5,11 @@ import { CheckCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const historial = [
-  { fecha: "Mar 2025", year: 2025, accion: "Instalación variadores de frecuencia — Línea B",                    ahorro: 1_650 },
-  { fecha: "Feb 2025", year: 2025, accion: "Automatización parada climatización industrial 17:45",               ahorro:   840 },
-  { fecha: "Ene 2025", year: 2025, accion: "Renegociación tarifa: reducción potencia de 1.000 a 800 kW",        ahorro: 3_200 },
-  { fecha: "Nov 2024", year: 2024, accion: "Sustitución iluminación nave principal y zona prensas — LED",        ahorro:   620 },
-  { fecha: "Sep 2024", year: 2024, accion: "Configuración apagado automático compresores auxiliares nocturnos",  ahorro:   480 },
+  { fecha: "Abr 2025", year: 2025, accion: "Renegociación tarifa eléctrica · reducción de potencia contratada de 800 a 620 kW", ahorro: 3_200 },
+  { fecha: "Abr 2025", year: 2025, accion: "Optimizaciones básicas de consumo · ajuste de cargas y horarios no críticos",        ahorro:   480 },
 ]
 
-const filters = ["Todos", "2025", "2024"] as const
+const filters = ["Todos", "2025"] as const
 type Filter = typeof filters[number]
 
 export default function HistorialPage() {
@@ -26,7 +23,7 @@ export default function HistorialPage() {
     <div className="space-y-3 animate-in fade-in duration-300">
       <div>
         <h1 className="text-xl font-semibold text-gray-900">Historial de Mejoras</h1>
-        <p className="text-xs text-gray-400">Acciones implementadas y ahorro acumulado</p>
+        <p className="text-xs text-gray-400">Acciones implementadas · Mes de prueba Abril 2025</p>
       </div>
 
       {/* KPI */}
@@ -36,7 +33,7 @@ export default function HistorialPage() {
           <p className="text-3xl font-semibold text-gray-900">
             {total.toLocaleString()} <span className="text-base font-normal text-gray-500">€/mes</span>
           </p>
-          <p className="text-xs text-gray-500 mt-0.5">{(total * 12).toLocaleString()} € ahorrados este año</p>
+          <p className="text-xs text-gray-500 mt-0.5">primer mes del Plan Starter · Freedom Frozen Foods</p>
         </div>
         <div className="text-right">
           <p className="text-2xl font-bold text-primary">−{Math.round(total / 70_000 * 100)}%</p>
@@ -63,7 +60,7 @@ export default function HistorialPage() {
       {/* Timeline */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Acciones implementadas</p>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Implementado en el mes de prueba</p>
           {filter !== "Todos" && (
             <span className="text-xs font-bold text-primary">−{filteredTotal.toLocaleString()} €/mes</span>
           )}
