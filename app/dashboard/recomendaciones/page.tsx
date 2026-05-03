@@ -5,14 +5,14 @@ import { Clock, Snowflake, Lightbulb, Wrench, Cpu, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const quickActions = [
-  { id: 1, icon: Clock,     title: "Adelantar parada de producción a 17:45",  desc: "Evita el pico de 18:00 en periodo Punta. Ahorro estimado sin coste operativo.", saving: 420 },
-  { id: 2, icon: Snowflake, title: "Climatización: setpoint +2 °C en Punta",  desc: "El sistema de climatización consume 180 kW. Un ajuste de 2 °C reduce el consumo un 8%.", saving: 280 },
-  { id: 3, icon: Lightbulb, title: "Apagar alumbrado exterior a las 22:30",   desc: "Detectado funcionamiento hasta las 02:00 en zona de carga. Sin impacto operativo.", saving: 95 },
+  { id: 1, icon: Clock,     title: "Desplazamiento de horarios a valle",          desc: "Cambiar el horario de producción principal a la franja valle (00:00–08:00), cuando la tarifa eléctrica es mucho más barata. Sin impacto en el volumen de producción.", saving: 4_200 },
+  { id: 2, icon: Snowflake, title: "Optimización climatización industrial",        desc: "Automatizar el apagado de zonas de la nave que no necesitan climatización fuera del horario de producción: oficinas, zonas de carga y pasillos. No afecta a las cámaras de congelación.", saving: 2_800 },
+  { id: 3, icon: Lightbulb, title: "Adelantar parada de producción a las 17:45", desc: "Evita el pico de arranque del turno de tarde en periodo Punta (18:00–22:00). Sin impacto en el volumen diario de producción.", saving: 420 },
 ]
 
 const costlyActions = [
-  { id: 4, icon: Wrench, title: "Variadores de frecuencia — Línea A",   desc: "Los motores de la línea A arrancan a plena potencia, generando picos de 120 kW. Los variadores eliminan este comportamiento.", saving: 1_800, cost: 28_000, roi: 16 },
-  { id: 5, icon: Cpu,    title: "Renovar compresor — Zona de prensas", desc: "Consumo actual: 340 kWh/h. Media sector para mismo equipo: 270 kWh/h. Degradación estimada del 26%.", saving: 980, cost: 15_500, roi: 16 },
+  { id: 4, icon: Cpu,    title: "Variadores de frecuencia — Línea B",      desc: "Los motores de la línea B arrancan a plena potencia generando picos de arranque. Los variadores eliminan estos picos y reducen el consumo en vacío.", saving: 1_800, cost: 22_000, roi: 12 },
+  { id: 5, icon: Wrench, title: "Renovar compresor — Zona de congelación", desc: "Consumo actual: 340 kWh/h. Media del sector para el mismo equipo: 270 kWh/h. Degradación estimada del 26%. Afecta directamente a la eficiencia de las cámaras.", saving: 980, cost: 15_500, roi: 16 },
 ]
 
 export default function RecomendacionesPage() {

@@ -5,22 +5,22 @@ import { Sun, Leaf, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function SolarPage() {
-  const [area, setArea] = useState(4000)
+  const [area, setArea] = useState(2000)
 
-  const panels       = Math.floor(area / 4)                    // 400W panel, 4m² cada uno
-  const annualGen    = Math.round(panels * 400 * 0.00175 * 1700) // 1700 h/año Lleida
+  const panels       = Math.floor(area / 4)                      // panel 400W, 4m² cada uno
+  const annualGen    = Math.round(panels * 400 * 0.00175 * 1700) // 1700 h pico/año en Lleida
   const annualSaving = Math.round(annualGen * 0.152)
   const installCost  = Math.round(panels * 320)
   const subsidy      = Math.round(installCost * 0.30)
   const netCost      = installCost - subsidy
   const roi          = (netCost / annualSaving).toFixed(1)
-  const co2          = (annualGen * 0.000233 / 1000).toFixed(0)
+  const co2          = (annualGen * 0.000233).toFixed(0)
 
   return (
     <div className="space-y-3 animate-in fade-in duration-300">
       <div>
         <h1 className="text-xl font-semibold text-gray-900">Simulador Solar</h1>
-        <p className="text-xs text-gray-400">Calcula si la fotovoltaica es rentable para tu planta</p>
+        <p className="text-xs text-gray-400">Calcula si la fotovoltaica es rentable · Freedom Frozen Foods</p>
       </div>
 
       {/* Input */}
@@ -28,9 +28,10 @@ export default function SolarPage() {
         <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Parámetros</p>
         <div className="space-y-4">
           {[
-            { label: "Ubicación",        value: "Lleida, España", fixed: true },
+            { label: "Ubicación",        value: "Lleida, España",  fixed: true },
             { label: "Consumo anual",    value: "5.040.000 kWh",  fixed: true },
             { label: "Tarifa media",     value: "0,152 €/kWh",    fixed: true },
+            { label: "Horas de sol/año", value: "1.700 h (zona A)", fixed: true },
           ].map((f) => (
             <div key={f.label} className="flex items-center justify-between">
               <p className="text-sm text-gray-500">{f.label}</p>
@@ -43,12 +44,12 @@ export default function SolarPage() {
               <p className="text-sm font-bold text-gray-900">{area.toLocaleString()} m²</p>
             </div>
             <input
-              type="range" min={500} max={8000} step={100} value={area}
+              type="range" min={500} max={5000} step={100} value={area}
               onChange={(e) => setArea(Number(e.target.value))}
               className="w-full accent-primary"
             />
             <div className="flex justify-between text-[10px] text-gray-400 mt-1">
-              <span>500 m²</span><span>8.000 m²</span>
+              <span>500 m²</span><span>5.000 m²</span>
             </div>
           </div>
         </div>
