@@ -6,38 +6,38 @@ import { ChevronDown, Activity } from "lucide-react"
 
 const sistemas = [
   {
-    nombre: "Línea de producción A",
-    kw: 320, pct: 35, estado: "Mejorable",
-    sparkline: [285, 310, 298, 320, 315, 308, 320],
-    detail: "Motor principal degradado. Arranque a plena potencia genera picos de 120 kW. Recomendado: variador de frecuencia (ROI 16 meses).",
+    nombre: "Producción de nuggets",
+    kw: 185, pct: 32, estado: "Crítico",
+    sparkline: [172, 188, 182, 195, 185, 180, 185],
+    detail: "Línea trabajando al 100% de su capacidad nominal. El arranque de nueva tanda genera picos de hasta 220 kW. PowerSave recomienda escalonar las cargas de arranque para reducir la demanda puntual.",
     saving: 1_800,
   },
   {
-    nombre: "Compresores — Zona prensas",
-    kw: 285, pct: 31, estado: "Crítico",
-    sparkline: [260, 275, 280, 290, 285, 292, 285],
-    detail: "Consumo 26% por encima de la media del sector para el mismo equipo. Degradación estimada. Se recomienda revisión urgente o sustitución.",
-    saving: 980,
-  },
-  {
-    nombre: "Climatización industrial",
-    kw: 180, pct: 20, estado: "Óptimo",
-    sparkline: [175, 180, 178, 182, 176, 180, 180],
-    detail: "Funcionamiento dentro de los parámetros óptimos. Automatización de parada a 17:45 implementada en Feb 2025.",
-    saving: 0,
-  },
-  {
-    nombre: "Iluminación nave y ext.",
-    kw: 75, pct: 8, estado: "Mejorable",
-    sparkline: [72, 75, 74, 76, 73, 75, 75],
-    detail: "Luminarias convencionales en zona exterior. Detectado encendido nocturno hasta las 02:00. Sensores de presencia pendientes.",
+    nombre: "Línea Mac & Cheese",
+    kw: 155, pct: 27, estado: "Mejorable",
+    sparkline: [142, 158, 150, 162, 155, 150, 155],
+    detail: "Línea operando al 85% de su eficiencia máxima. El motor de la cinta transportadora presenta signos de degradación temprana. Se recomienda revisión preventiva antes de que afecte a la producción.",
     saving: 620,
   },
   {
+    nombre: "Cámaras de congelación",
+    kw: 145, pct: 25, estado: "Óptimo",
+    sparkline: [142, 145, 143, 147, 144, 145, 145],
+    detail: "Temperatura estable a −18 °C en todas las cámaras. Consumo dentro de los parámetros normales. El ciclo de desescarche está correctamente programado en periodo Valle (03:00).",
+    saving: 0,
+  },
+  {
+    nombre: "Climatización industrial",
+    kw: 62, pct: 11, estado: "Mejorable",
+    sparkline: [55, 65, 58, 70, 62, 58, 62],
+    detail: "Climatización activa en oficinas, zona de carga y pasillos durante periodo Punta. Mejora pendiente: automatización de apagado en zonas no productivas. Ahorro estimado: 2.800 €/mes.",
+    saving: 2_800,
+  },
+  {
     nombre: "Oficinas y servicios",
-    kw: 55, pct: 6, estado: "Óptimo",
-    sparkline: [50, 54, 52, 55, 53, 55, 55],
-    detail: "Consumo estable y dentro de la media del sector para instalaciones de oficina con 180 empleados.",
+    kw: 25, pct: 5, estado: "Óptimo",
+    sparkline: [23, 26, 24, 27, 25, 25, 25],
+    detail: "Consumo estable y dentro de la media del sector. Iluminación LED instalada en todas las zonas de oficina.",
     saving: 0,
   },
 ]
@@ -71,8 +71,8 @@ export default function SistemasPage() {
         </div>
         <div className="text-right">
           <p className="text-xs text-gray-500 mb-0.5">Potencia contratada</p>
-          <p className="text-xl font-semibold text-gray-400">800 kW</p>
-          <p className="text-xs text-primary font-semibold mt-0.5">{Math.round(total / 800 * 100)}% de uso</p>
+          <p className="text-xl font-semibold text-gray-400">620 kW</p>
+          <p className="text-xs text-primary font-semibold mt-0.5">{Math.round(total / 620 * 100)}% de uso</p>
         </div>
       </div>
 

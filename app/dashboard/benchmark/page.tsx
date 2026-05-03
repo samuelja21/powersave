@@ -4,25 +4,25 @@ import { useState } from "react"
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const sectores = ["Siderurgia", "Logística", "Retail", "Hostelería"] as const
+const sectores = ["Alimentación", "Logística", "Química", "Textil"] as const
 type Sector = typeof sectores[number]
 
-const MY_KWH = 28_000
+const MY_KWH = 42_000
 
 const sectorData: Record<Sector, { media: number; top: number; percentil: number }> = {
-  "Siderurgia": { media: 34_000, top: 17_500, percentil: 62 },
-  "Logística":  { media: 18_000, top:  9_200, percentil: 71 },
-  "Retail":     { media: 12_500, top:  5_800, percentil: 55 },
-  "Hostelería": { media: 22_000, top: 11_000, percentil: 68 },
+  "Alimentación": { media: 52_000, top: 27_000, percentil: 58 },
+  "Logística":    { media: 38_000, top: 20_000, percentil: 44 },
+  "Química":      { media: 68_000, top: 41_000, percentil: 74 },
+  "Textil":       { media: 29_000, top: 14_000, percentil: 31 },
 }
 
 export default function BenchmarkPage() {
-  const [sector, setSector] = useState<Sector>("Siderurgia")
+  const [sector, setSector] = useState<Sector>("Alimentación")
 
   const { media, top, percentil } = sectorData[sector]
   const gapSector  = Math.round((media - MY_KWH) / media * 100)
   const gapTop     = Math.round((MY_KWH - top)   / MY_KWH * 100)
-  const potencial  = Math.round((MY_KWH - top) * 180 * 0.152)
+  const potencial  = Math.round((MY_KWH - top) * 100 * 0.152)
   const topPercent = Math.round(top  / media * 69)
   const myPercent  = Math.round(MY_KWH / media * 69)
 
@@ -36,7 +36,7 @@ export default function BenchmarkPage() {
     <div className="space-y-3 animate-in fade-in duration-300">
       <div>
         <h1 className="text-xl font-semibold text-gray-900">Benchmark Sectorial</h1>
-        <p className="text-xs text-gray-400">kWh por empleado/año · Cataluña</p>
+        <p className="text-xs text-gray-400">kWh por empleado/año · Freedom Frozen Foods</p>
       </div>
 
       {/* Selector de sector */}
