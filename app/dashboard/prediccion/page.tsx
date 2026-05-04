@@ -4,6 +4,7 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Zap, Euro, TrendingDown, Clock, Snowflake, Lightbulb, Cpu, Check, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const periods = ["7 días", "Mensual", "Trimestral", "Anual"]
 
@@ -256,8 +257,10 @@ export default function PrediccionPage() {
         </div>
       </div>
 
-      <Button className="w-full rounded-full py-6 text-sm font-semibold">
-        Ver plan de acción completo <ArrowRight className="w-4 h-4 ml-2" />
+      <Button asChild className="w-full rounded-full py-6 text-sm font-semibold">
+        <Link href="/dashboard/recomendaciones">
+          Ver plan de acción completo <ArrowRight className="w-4 h-4 ml-2" />
+        </Link>
       </Button>
     </div>
   )
