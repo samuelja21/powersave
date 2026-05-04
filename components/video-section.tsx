@@ -5,10 +5,9 @@ import { Play } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const tabs = [
-  { id: 1, label: "Video 1", src: "/videos/video-1.mp4" },
-  { id: 2, label: "Video 2", src: "/videos/video-2.mp4" },
-  { id: 3, label: "Video 3", src: "/videos/video-3.mp4" },
-  { id: 4, label: "Video 4", src: "/videos/video-4.mp4" },
+
+  { id: 1, label: "Video PowerSave", src: "/videos/video-3.mp4" },
+
 ]
 
 export function VideoSection() {
